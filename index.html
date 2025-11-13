@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Our Son’s Baptism Invitation</title>
+
+<style>
+  :root{
+    --sky-1:#f4faff; --sky-2:#e8f4ff;
+    --paper:#ffffff; --ink:#0f172a; --muted:#6b7280;
+    --accent:#b7c9ff; --accent-ink:#0f172a; --line:#e5e7eb;
+
+    /* palette from screenshot */
+    --p-black:#000000; --p-white:#ffffff; --p-blue:#1657c9;
+
+    --float-speed:32s; --float-speed-2:38s; --float-amp:18px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; font-family: ui-serif,"Georgia","Times New Roman",serif;
+    color:var(--ink); background:linear-gradient(180deg,var(--sky-1),var(--sky-2));
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1100px;margin-inline:auto;padding:clamp(16px,3vw,32px)}
+  section{padding:clamp(32px,6vw,72px) 0}
+
+  /* Floating background (doves & crosses) */
+  .sky{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+  .float{position:absolute;width:52px;height:52px;opacity:.25;filter:drop-shadow(0 4px 6px rgba(0,0,0,.08));
+    animation:drift var(--float-speed) linear infinite, bob 6s ease-in-out infinite;
+    background-size:contain;background-repeat:no-repeat;background-position:center}
+  .icon-cross{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%23cbd9ff"/><stop offset="1" stop-color="%23b2c1ff"/></linearGradient></defs><path d="M28 6h8v16h16v8H36v28h-8V30H12v-8h16z" fill="url(%23g)"/></svg>')}
+  .icon-dove{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M12 36c10-1 14-7 16-12 4 6 10 10 18 10-4 2-7 5-8 9 7 0 12-3 14-8 1 7-3 14-10 17-8 3-17 0-21-7-4-6-4-8-9-9z" fill="%23ffffff" stroke="%23c9d7ff" stroke-width="2" stroke-linejoin="round"/><circle cx="38" cy="30" r="2" fill="%230f172a"/></svg>')}
+  .float:nth-child(1){left:6%;top:12%}
+  .float:nth-child(2){left:20%;top:68%}
+  .float:nth-child(3){left:34%;top:22%}
+  .float:nth-child(4){left:48%;top:80%}
+  .float:nth-child(5){left:62%;top:16%}
+  .float:nth-child(6){left:76%;top:66%}
+  .float:nth-child(7){left:88%;top:28%}
+  .float:nth-child(8){left:10%;top:84%}
+  @keyframes drift{from{transform:translateX(-6vw)}to{transform:translateX(6vw)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+
+  /* UI */
+  .hero{min-height:92vh;display:grid;place-items:center}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:clamp(22px,4vw,40px);text-align:center}
+  .subtitle{color:var(--muted);font-size:clamp(14px,2.4vw,18px)}
+  .bigline{font-size:clamp(28px,6vw,48px);margin:.5rem 0;color:var(--ink);letter-spacing:.4px}
+  .date{font-size:clamp(16px,3vw,20px);margin:.4rem 0 1rem}
+  .divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,#bcd3ff,transparent);margin:16px auto}
+  .btn{display:inline-block;border-radius:999px;padding:12px 20px;text-decoration:none;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:600;transition:transform .2s ease}
+  .btn:hover{transform:translateY(-2px)}
+
+  /* Countdown */
+  .countdown{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+  .timebox{min-width:88px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 10px;text-align:center}
+  .timebox b{display:block;font-size:24px}
+  .timebox span{font-size:12px;color:var(--muted);letter-spacing:.6px}
+
+  /* Sections */
+  h2{text-align:center;color:var(--ink);font-size:clamp(24px,5vw,38px)}
+  p.lead{text-align:center;color:var(--muted);max-width:720px;margin:0 auto 28px}
+  .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .panel h3{margin:0 0 6px;color:#1f2a44}
+  .panel p{margin:6px 0 0;color:#0f172a;font-size:15px}
+
+  /* Photos */
+  .photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:24px}
+  .photos img{width:100%;height:280px;object-fit:cover;border-radius:16px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.05)}
+
+  /* NEW — Color Palette */
+  .palette{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+  .swatch{display:grid;place-items:center;width:86px;height:86px;border-radius:999px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.04)}
+  .swatch small{margin-top:8px;display:block;text-align:center;color:var(--muted)}
+  .swatch[data-c="black"]{background:var(--p-black)}
+  .swatch[data-c="white"]{background:var(--p-white);border:1px solid #d1d5db}
+  .swatch[data-c="blue"]{background:var(--p-blue)}
+
+  /* NEW — Gift Guide */
+  .gift-list{display:grid;gap:10px;margin-top:10px}
+  .gift-item{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px dashed #cfe0ff;border-radius:12px;background:#f7fbff}
+  .gift-item svg{flex:0 0 20px}
+
+  /* NEW — Reminders */
+  .reminders{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:10px}
+  .badge{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;gap:10px;align-items:center}
+  .badge svg{flex:0 0 22px}
+  .badge b{display:block;margin-bottom:2px}
+
+  /* Map */
+  .map-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:0;overflow:hidden}
+  .map-wrap{position:relative;width:100%;padding-top:56.25%}
+  .map-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .map-info{padding:14px 16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+  .addr{color:#0f172a;font-size:14px}
+  .openmaps{white-space:nowrap}
+
+  footer{text-align:center;color:#1f2a44;padding:40px 0;border-top:1px solid var(--line);background:linear-gradient(180deg,var(--sky-2),var(--sky-1))}
+</style>
+</head>
+
+<body>
+
+<!-- animated background -->
+<div class="sky" aria-hidden="true">
+  <div class="float icon-cross"></div><div class="float icon-dove"></div>
+  <div class="float icon-cross"></div><div class="float icon-dove"></div>
+  <div class="float icon-cross"></div><div class="float icon-dove"></div>
+  <div class="float icon-cross"></div><div class="float icon-dove"></div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="card">
+      <div class="subtitle">PLEASE JOIN US FOR</div>
+      <h1 class="bigline">THE BAPTISM OF OUR SON</h1>
+      <div class="divider"></div>
+      <div class="date">December 13, 2025 • 10:00 AM</div>
+      <p class="subtitle">
+        Ceremony at Bicutan Parochial School, M. L. Quezon Ave, Taguig<br>
+        Reception follows at McDonald’s — Lower Bicutan Branch
+      </p>
+      <a class="btn" href="#map">View Live Map</a>
+
+      <!-- Countdown -->
+      <div class="countdown" id="countdown" aria-live="polite">
+        <div class="timebox"><b id="dd">0</b><span>DAYS</span></div>
+        <div class="timebox"><b id="hh">00</b><span>HOURS</span></div>
+        <div class="timebox"><b id="mm">00</b><span>MINUTES</span></div>
+        <div class="timebox"><b id="ss">00</b><span>SECONDS</span></div>
+      </div>
+      <p id="afterMsg" class="subtitle" style="display:none;margin-top:10px">It’s Baptism Day! See you there 💙</p>
+    </div>
+  </div>
+</section>
+
+<!-- Photos -->
+<section id="photos">
+  <div class="wrap">
+    <h2>Our Precious Moments 💙</h2>
+    <p class="lead">Replace these with your baby’s photos.</p>
+    <div class="photos">
+      <img src="https://images.unsplash.com/photo-1503455637927-730bce8583c0?q=80&w=800" alt="Baby photo 1">
+      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800" alt="Baby photo 2">
+      <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800" alt="Baby photo 3">
+    </div>
+  </div>
+</section>
+
+<!-- NEW: Color Palette -->
+<section id="palette">
+  <div class="wrap">
+    <h2>Color Palette</h2>
+    <p class="lead">Theme colors for outfits & decors.</p>
+    <div class="palette">
+      <div class="swatch" data-c="black" title="#000000"></div>
+      <div class="swatch" data-c="white" title="#FFFFFF"></div>
+      <div class="swatch" data-c="blue" title="#1657C9"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Event Details + Gift Guide + Reminders -->
+<section id="details">
+  <div class="wrap">
+    <h2>Event Details</h2>
+    <p class="lead">We’re blessed to celebrate this special day with you. Kindly arrive 15–20 minutes early.</p>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>Ceremony</h3>
+        <p>10:00 AM — Bicutan Parochial School<br>Attire: Semi-formal / White-themed</p>
+      </div>
+      <div class="panel">
+        <h3>Reception</h3>
+        <p>12:00 NN — McDonald’s, Lower Bicutan Branch<br>449 Banai St, Taguig City</p>
+      </div>
+
+      <!-- NEW: Gift Guide -->
+      <div class="panel">
+        <h3>Gift Guide</h3>
+        <p class="lead" style="margin:0 0 10px">Your presence is the greatest gift. If you’d like to give, here are practical ideas:</p>
+        <div class="gift-list">
+          <div class="gift-item">
+            <!-- diaper icon -->
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="#1657c9" d="M3 7a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v4a4 4 0 0 1-4 4h-2l-3 3-3-3H7a4 4 0 0 1-4-4V7z"/></svg>
+            <div><b>EQ Baby Pants (XXL)</b></div>
+          </div>
+          <div class="gift-item">
+            <!-- wipes icon -->
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#1657c9" d="M5 10h14a2 2 0 0 1 2 2v2H3v-2a2 2 0 0 1 2-2zm3-2 2-3h4l2 3H8z"/></svg>
+            <div><b>Kleenfant Wipes</b></div>
+          </div>
+          <div class="gift-item">
+            <!-- clothes icon -->
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#1657c9" d="M8 3 6 5l3 2v12H6V9L3 7l3-4h2zm8 0 2 2-3 2v12h3V9l3-2-3-4h-2z"/></svg>
+            <div><b>Clothes</b> (size 2T and up)</div>
+          </div>
+          <div class="gift-item">
+            <!-- book/toy icon -->
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#1657c9" d="M4 4h8v16H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm10 0h6v16h-6z"/></svg>
+            <div><b>Educational Toys/Books</b></div>
+          </div>
+          <div class="gift-item">
+            <!-- money icon -->
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#1657c9" d="M3 6h18v12H3zM6 9h2v2H6zM16 13h2v2h-2z"/></svg>
+            <div><b>Monetary Gift</b></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEW: Reminders -->
+      <div class="panel">
+        <h3>Reminders</h3>
+        <div class="reminders">
+          <div class="badge">
+            <!-- no smoking -->
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="#1657c9" d="M2 15h16v2H2v-2zm18 0h2v2h-2v-2zM7 7h2v3H7zM4 9h2v1H4z"/><path d="M3 3 21 21" stroke="#ef4444" stroke-width="2"/></svg>
+            <div><b>No smoking / vaping</b><span class="muted">Keep the area baby-safe</span></div>
+          </div>
+          <div class="badge">
+            <!-- mask -->
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="#1657c9" d="M6 10c0-2 3-3 6-3s6 1 6 3v2c0 2-3 3-6 3s-6-1-6-3v-2z"/></svg>
+            <div><b>Wear facemask if sick</b><span class="muted">Cough/colds? Please mask.</span></div>
+          </div>
+          <div class="badge">
+            <!-- kiss ban -->
+            <svg viewBox="0 0 24 24" width="22" height="22"><circle cx="9" cy="9" r="3" fill="#1657c9"/><path fill="#1657c9" d="M14 12s2 1 3 2-1 3-3 3-3-1-3-3 3-2 3-2z"/><path d="M3 3 21 21" stroke="#ef4444" stroke-width="2"/></svg>
+            <div><b>No kissing the baby</b><span class="muted">Help prevent germs</span></div>
+          </div>
+          <div class="badge">
+            <!-- sanitize -->
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="#1657c9" d="M12 2a3 3 0 0 1 3 3v1h-2V5a1 1 0 0 0-2 0v1H9V5a3 3 0 0 1 3-3zM6 9h12v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z"/></svg>
+            <div><b>Sanitize your hands</b><span class="muted">Stations available</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Live Map -->
+<section id="map">
+  <div class="wrap">
+    <h2>Live Google Map</h2>
+    <p class="lead">Reception venue: 449 Banai St, Taguig, Metro Manila</p>
+    <div class="map-card">
+      <div class="map-wrap">
+        <iframe title="Google Map — 449 Banai St, Taguig" loading="lazy" allowfullscreen
+          src="https://www.google.com/maps?q=449+Banai+St,+Taguig,+Metro+Manila&output=embed"></iframe>
+      </div>
+      <div class="map-info">
+        <div class="addr">449 Banai St, Taguig, Metro Manila</div>
+        <a class="btn openmaps" href="https://www.google.com/maps?q=449+Banai+St,+Taguig,+Metro+Manila" target="_blank" rel="noopener">Open in Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><p>With love and gratitude — See you on this joyful day 💙</p></div>
+</footer>
+
+<script>
+  /* Countdown */
+  const EVENT_TIME = '2025-12-13T10:00:00';
+  const $d=document.getElementById('dd'),$h=document.getElementById('hh'),
+        $m=document.getElementById('mm'),$s=document.getElementById('ss'),
+        $after=document.getElementById('afterMsg');
+  function tick(){
+    const t=new Date(EVENT_TIME).getTime(), n=Date.now(); let diff=t-n;
+    if(diff<=0){$d.textContent='0';$h.textContent='00';$m.textContent='00';$s.textContent='00';$after.style.display='block';clearInterval(timer);return;}
+    const D=Math.floor(diff/86400000); diff-=D*86400000;
+    const H=Math.floor(diff/3600000);  diff-=H*3600000;
+    const M=Math.floor(diff/60000);    diff-=M*60000;
+    const S=Math.floor(diff/1000);
+    $d.textContent=D; $h.textContent=String(H).padStart(2,'0');
+    $m.textContent=String(M).padStart(2,'0'); $s.textContent=String(S).padStart(2,'0');
+  }
+  const timer=setInterval(tick,1000); tick();
+</script>
+
+</body>
+</html>
